@@ -186,9 +186,16 @@ class HospitalSearchDelegate extends SearchDelegate {
         return ListTile(
           title: Text(hospital.name),
           subtitle: Text(hospital.location),
-          onTap: () {
-            query = hospital.name;
-            showResults(context);
+          onTap: () async {
+            final updatedHospital = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddHospitalScreen(hospital: hospital),
+              ),
+            );
+            if (updatedHospital != null) {
+              close(context, updatedHospital);
+            }
           },
         );
       },
